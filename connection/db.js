@@ -6,7 +6,7 @@ dotenv.config();
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
-  dialectModule: pg, // 2. THIS IS THE CRITICAL FIX FOR VERCEL
+  dialectModule: pg, 
   dialectOptions: {
     ssl: {
       require: true,
