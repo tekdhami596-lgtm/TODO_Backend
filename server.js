@@ -12,9 +12,10 @@ const app = express();
 // middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.Frontend_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 app.use(express.json());
@@ -32,19 +33,14 @@ const checkConnectionDB = async () => {
   try {
     // test database connection
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    console.log("Neon Postgres connected.");
 
     await sequelize.sync();
     console.log("Database synchronized");
-
-    // start server
-    app.listen(PORT, () => {
-      console.log(`server running at http://localhost:${PORT}`);
-    });
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
-    process.exit(1);
+    console.error("Database connection error:", error);
   }
 };
 
 checkConnectionDB();
+export default app;
