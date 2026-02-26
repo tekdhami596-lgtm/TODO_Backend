@@ -1,3 +1,5 @@
+import User from "./models/user.model.js";
+import Todo from "./models/todoModel.js";
 import express from "express";
 import cors from "cors";
 import todoRoutes from "./routes/todoRoutes.js";
@@ -35,7 +37,7 @@ const checkConnectionDB = async () => {
     await sequelize.authenticate();
     console.log("Neon Postgres connected.");
 
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
     console.log("Database synchronized");
   } catch (error) {
     console.error("Database connection error:", error);
