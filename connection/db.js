@@ -1,19 +1,19 @@
 import { Sequelize } from "sequelize";
+import * as pg from "pg"; // 1. Import everything from pg
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
-  dialectModule: pg,
-  protocol: "postgres",
+  dialectModule: pg, // 2. THIS IS THE CRITICAL FIX FOR VERCEL
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false, // Essential for Neon/Vercel environments
+      rejectUnauthorized: false,
     },
   },
-  logging: false, // Optional: set to console.log to see SQL queries
+  logging: false,
 });
 
 export default sequelize;
